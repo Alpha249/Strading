@@ -1,0 +1,10 @@
+Factors that affect stock price:
+
+1. Company News
+2. Earnings Report/Call
+3. Government Policies
+4. Company Events/Conventions/Launches
+5. Environmental Events 
+6. Employee Layoffs
+7. Takeover/Merger
+8. Company Lawsuits/Scandals
