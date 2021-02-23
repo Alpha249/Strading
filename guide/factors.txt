@@ -1,4 +1,5 @@
 Factors that affect stock price:
+(Tech Sector)
 
 1. Company News
 2. Earnings Report/Call
