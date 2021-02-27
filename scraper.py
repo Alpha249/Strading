@@ -3,9 +3,11 @@
 # 2. Export link list to individual csv files - ✓
 # 3. Figure out way to remove column name in .csv - ✓
 # 4. Filter links based on date - ✓
+# 5. Change links data to title - ✓
 
 import time
 from datetime import datetime, date
+import random
 
 import pandas as pd
 import requests
@@ -16,8 +18,14 @@ start = time.perf_counter()
 companies = []
 dates = []
 f_date = []
-links = []
-val = []
+titles = []
+user_agents = []
+
+with open('guide/useragents.txt', 'r') as ua:
+    ua = ua.readlines()
+    for p in ua:
+        p = p.replace('\n', '')
+        user_agents.append(p)
 
 with open('guide/companies.txt', 'r') as f:
     f = f.readlines()
@@ -26,8 +34,10 @@ with open('guide/companies.txt', 'r') as f:
         companies.append(lines)
 
 headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
-                  "Chrome/88.0.4324.182 Safari/537.36"
+    "User-Agent": random.choice(user_agents),
+    "Upgrade-Insecure-Requests": "1",
+    "Connection": "keep-alive"
+
 }
 
 
@@ -38,11 +48,10 @@ def News(company):
         page = requests.get(URL, headers=headers)
         soup = BeautifulSoup(page.content, 'xml')
 
-        # Link filtering
-        link_ = soup.find_all("link")
-        for v in link_:
-            links.append(v.get_text())
-        link = [x for x in links if "https://news.google.com/search?q=" not in x]
+        # Title filtering
+        title_ = soup.find_all("title")
+        for v in title_:
+            titles.append(v.get_text())
 
         # Date filtering
         Date_ = soup.find_all("pubDate")
@@ -55,7 +64,7 @@ def News(company):
             f_date.append(d.strftime('%d-%b-%Y'))
 
         # Create dictionary
-        dictionary = dict(zip(link, f_date))
+        dictionary = dict(zip(titles, f_date))
 
         for key, value in dict(dictionary).items():
             vald = datetime.strptime(value, '%d-%b-%Y')
@@ -71,16 +80,15 @@ def News(company):
 
             pass
 
-        final_links = list(dictionary.keys())
+        final_titles = list(dictionary.keys())
 
         # Export data
-        df = pd.DataFrame(final_links)
-        df.to_csv(f'links/{i}.csv')
+        df = pd.DataFrame(final_titles)
+        df.to_csv(f'titles/{i}.csv')
 
         # Reset lists so no overlap occurs
-        del link[:]
-        del links[:]
-        del final_links[:]
+        del titles[:]
+        del final_titles[:]
 
         print(f"{i}'s news scraped successfully")
 
@@ -90,7 +98,7 @@ def News(company):
 
 def Filter(company):
     for k in company:
-        file = f'links/{k}.csv'
+        file = f'titles/{k}.csv'
 
         with open(file, 'r', encoding='utf-8') as u:
             u.seek(0)
@@ -107,4 +115,4 @@ Filter(companies)
 
 end = time.perf_counter()
 
-print(f"Time take: {end - start}")
+print(f"Time taken: {end - start}")
