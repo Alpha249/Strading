@@ -4,10 +4,12 @@
 # 3. Figure out way to remove column name in .csv - ✓
 # 4. Filter links based on date - ✓
 # 5. Change links data to title - ✓
+# 6. Filter news sources from title data in .csv - ✓
 
 import time
 from datetime import datetime, date
 import random
+import re
 
 import pandas as pd
 import requests
@@ -21,6 +23,8 @@ f_date = []
 titles = []
 user_agents = []
 
+regex = r'(\s-\s.*)'
+
 with open('guide/useragents.txt', 'r') as ua:
     ua = ua.readlines()
     for p in ua:
@@ -32,6 +36,7 @@ with open('guide/companies.txt', 'r') as f:
     for lines in f:
         lines = lines.replace('\n', '')
         companies.append(lines)
+
 
 headers = {
     "User-Agent": random.choice(user_agents),
@@ -84,7 +89,7 @@ def News(company):
 
         # Export data
         df = pd.DataFrame(final_titles)
-        df.to_csv(f'titles/{i}.csv')
+        df.to_csv(f'titles/{i}.csv', encoding='utf-8')
 
         # Reset lists so no overlap occurs
         del titles[:]
@@ -102,11 +107,16 @@ def Filter(company):
 
         with open(file, 'r', encoding='utf-8') as u:
             u.seek(0)
-            line = u.readlines()
-            del line[:1]
+            u = u.readlines()
+            # Delete first line
+            del u[:1]
 
-        with open(file, 'w+') as j:
-            for line_ in line:
+        # Sub all the new sources for whitespaces
+        matches = [re.sub(regex, '', line) for line in u]
+
+        # Write to same file with cleaned titles
+        with open(file, 'w+', encoding='utf-8') as j:
+            for line_ in matches:
                 j.write(line_)
 
 
