@@ -95,7 +95,7 @@ def News(company):
         del titles[:]
         del final_titles[:]
 
-        print(f"{i}'s news scraped successfully")
+        print(f"{i}'s news scraped successfully.")
 
         # Pause to avoid IP blocking
         time.sleep(3)
