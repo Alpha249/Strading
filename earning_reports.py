@@ -1,14 +1,14 @@
-from datetime import datetime, date
+from datetime import datetime
 import yahoo_fin
 
 read_dates = []
 call_dates = []
-ticker = []
+ticker = ['MSFT']
 
-file = open('guide/tickers.txt', 'r').readlines()
-for line in file:
-    line = line.replace('\n', '')
-    ticker.append(line)
+# file = open('guide/tickers.txt', 'r').readlines()
+# for line in file:
+#     line = line.replace('\n', '')
+#     ticker.append(line)
 
 
 def CheckDate(tickers):
@@ -29,11 +29,15 @@ def CheckDate(tickers):
                 if today.date() == k.date():
                     with open(f'earning_dates/today.txt', 'a') as j:
                         j.write(f'{i}: {k.strftime("%d-%m-%Y")}\n')
-                    del call_dates[:]
-                    break
-                else:
-                    print(f"{i}'s earning call not today.")
-                    del call_dates[:]
+                    return True
+
+        del read_dates[:]
+        del call_dates[:]
+
+
+def EarningAnalysis(tickers):
+
+    pass
 
 
 CheckDate(ticker)
