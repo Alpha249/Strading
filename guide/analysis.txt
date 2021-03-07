@@ -1,0 +1,11 @@
+Operating Profit Margin = [Operating Income/Revenue] × 100
+
+A balance sheet is a financial statement that reports a company's assets, liabilities and shareholders' equity.
+Shareholders Equity = Total Assets − Total Liabilities
+
+A cash flow statement is a financial statement that summarizes the amount of cash and cash equivalents entering and
+leaving a company.
+
+An income statement is one of the three (along with balance sheet and statement of cash flows) major financial statements
+that reports a company's financial performance over a specific accounting period.
+Net Income = (Total Revenue + Gains) – (Total Expenses + Losses)
