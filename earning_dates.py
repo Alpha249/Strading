@@ -9,7 +9,7 @@ start = time.perf_counter()
 ticker = []
 dates = []
 
-file = open('guide/tickers.txt', 'r').readlines()
+file = open('guide/tickers.txt', 'r', encoding='utf-8').readlines()
 for line in file:
     line = line.replace('\n', '')
     ticker.append(line)
@@ -40,7 +40,7 @@ def Calendar(Ticker):
             dates.append(d.strftime("%d-%m-%Y"))
 
         # Export Dates
-        with open(f'earning_dates/{i}.txt', 'w') as f:
+        with open(f'earning_dates/{i}.txt', 'w', encoding='utf-8') as f:
             for k in dates:
                 f.write(f"{k}\n")
 

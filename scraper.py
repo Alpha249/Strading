@@ -1,4 +1,4 @@
-# To-D0:
+# To-Do:
 # 1. Sort company link list into separate lists - ✓
 # 2. Export link list to individual csv files - ✓
 # 3. Figure out way to remove column name in .csv - ✓
