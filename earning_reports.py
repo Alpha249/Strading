@@ -3,15 +3,18 @@ import yahoo_fin
 
 read_dates = []
 call_dates = []
-ticker = ['MSFT']
+ticker = []
 
-# file = open('guide/tickers.txt', 'r').readlines()
-# for line in file:
-#     line = line.replace('\n', '')
-#     ticker.append(line)
+file = open('guide/tickers.txt', 'r').readlines()
+for line in file:
+    line = line.replace('\n', '')
+    ticker.append(line)
 
 
 def CheckDate(tickers):
+    with open('earning_dates/today.txt', 'w') as clear:
+        clear.truncate(0)
+
     for i in tickers:
         with open(f'earning_dates/{i}.txt', 'r', encoding='utf-8') as f:
             dates = f.readlines()
@@ -36,7 +39,6 @@ def CheckDate(tickers):
 
 
 def EarningAnalysis(tickers):
-
     pass
 
 
